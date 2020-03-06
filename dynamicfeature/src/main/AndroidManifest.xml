@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="com.example.dynamicfeature">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <dist:module
+        dist:instant="false"
+        dist:title="@string/title_dynamicfeature">
+        <dist:delivery>
+            <dist:on-demand />
+        </dist:delivery>
+
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+    <application>
+        <activity android:name=".HereMapActivity"/>
+        <activity android:name=".BasicMapActivity"/>
+
+        <meta-data android:name="com.here.android.maps.appid" android:value="vkFeebpTqdX4y90mq2K2"/>
+        <meta-data android:name="com.here.android.maps.apptoken" android:value="wd96V4IE99h3ov3Ge5XwXw"/>
+        <meta-data android:name="com.here.android.maps.license.key" android:value="gRfoUTquIjpDLQ710Smj3b79h0l0JIBP8Zu03HLvntmlN+W3s2ruHZQGbv6ZM3ysZ3szSessojY41st0RkRxVHyWnLSZ7kfpTTP9nkYP4BaVlxtr1gYO/HB/D5ZKvyqvKjr6HEEWNvOberUa0tSV7E174oRH3RXcDUFeNEkoXDRhArxMLA08BOMsKAbHfkAN4PBu3s9QTwlDVzo1WNweCihV/dB1FzdOJTvOGxuc3dOqYb/lgE+GV0RIIcbCjNjFhLXd9a05oftCjdF+y38usC3xNIgWcZbta+AcVWWfaYyMvpYPMPqNFZTCvucUChijhMTlzFHRQNJKL1HUec6TThDqBG0fdXC7j5pwHlg2XOaTxfCQeK/MlKF3J7RFxxia9vXtUO1dj11L5zRRgs2P9yabVzj/fyONSmoLfGalgNsTqMZXV7OucKh7Stlbdmqc1b8bgFE+kDUX6pFYKa/tMGk08nEs9JrC0LI6W5qVSTRRRmN9x+OPA1MZ1Ih8zEkV3szQE2KVWs7CbpspdSkkvcdF72aLnYR9wifDOWLwALMSY9YCzNYW0oR8nHbzU4zEdZIaRUri+TN/S3Bd8ya2THqeyZQ/vTHtqIst4pplmddf25qggXbSZMIvjSm93xd2q8nZ4uyV1mcHk02H3PGo3QhBhA+e9gyHFBa5K5hEfZk="/>
+
+        <!--
+            Embed the HERE Map Service. This will create and run the map service under the
+            application's process making sure that the map data between this application
+            and others' using the HERE SDK are not shared. See BasicMapActivity.java on
+            details how to set the location of your map data cache.
+            For more information, see the HERE SDK Developer's Guide
+        -->
+        <service android:exported="false" android:label="BasicMapSolutionMapService" android:name="com.here.android.mpa.service.MapService">
+            <intent-filter>
+                <action android:name="com.here.android.tutorial.MapService">
+                </action>
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>
