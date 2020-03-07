@@ -14,6 +14,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var manager: SplitInstallManager
     val moduleName = "dynamicfeature"
+    val googleMapModule = "googlefeature"
+    val hereMapActivity = "com.example.dynamicfeature.BasicMapActivity"
+    val googleMapActivity = "com.example.googlefeature.GoogleMapsActivity"
 
     /** Listener used to handle changes in state for install requests. */
     @SuppressLint("SwitchIntDef")
@@ -35,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                     startIntentSender(state.resolutionIntent()?.intentSender, null, 0, 0, 0)
                 }
                 SplitInstallSessionStatus.INSTALLED -> {
-                    launchActivity("com.example.dynamicfeature.BasicMapActivity")
+                    launchActivity(hereMapActivity)
                 }
 
                 SplitInstallSessionStatus.INSTALLING -> displayLoadingState(state, "Installing $name")
@@ -51,28 +54,45 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         manager = SplitInstallManagerFactory.create(this)
 
-        if (manager.installedModules.contains(moduleName)) {
-            toastAndLog("${moduleName} Already installed")
-            launchActivity("com.example.dynamicfeature.BasicMapActivity")
-
-        } else {
-            toastAndLog("Starting install for $moduleName")
-
-            val request = SplitInstallRequest.newBuilder()
-                .addModule(moduleName)
-                .build()
-
-            manager.startInstall(request)
-                .addOnCompleteListener {toastAndLog("Module $moduleName installed") }
-                .addOnSuccessListener {toastAndLog("Loading $moduleName") }
-                .addOnFailureListener { toastAndLog("Error Loading $moduleName") }
-        }
-
         bt_here_map.setOnClickListener {
-            launchActivity("com.example.dynamicfeature.BasicMapActivity")
+
+            if (manager.installedModules.contains(moduleName)) {
+                toastAndLog("${moduleName} Already installed")
+                launchActivity(hereMapActivity)
+
+            } else {
+                toastAndLog("Starting install for $moduleName")
+
+                val request = SplitInstallRequest.newBuilder()
+                    .addModule(moduleName)
+                    .build()
+
+                manager.startInstall(request)
+                    .addOnCompleteListener {toastAndLog("Module $moduleName installed") }
+                    .addOnSuccessListener {toastAndLog("Loading $moduleName") }
+                    .addOnFailureListener { toastAndLog("Error Loading $moduleName") }
+            }
         }
 
+        bt_google_map.setOnClickListener {
 
+            if (manager.installedModules.contains(googleMapModule)) {
+                toastAndLog("${googleMapModule} Already installed")
+                launchActivity(googleMapActivity)
+
+            } else {
+                toastAndLog("Starting install for $googleMapModule")
+
+                val request = SplitInstallRequest.newBuilder()
+                    .addModule(googleMapModule)
+                    .build()
+
+                manager.startInstall(request)
+                    .addOnCompleteListener {toastAndLog("Module $googleMapModule installed") }
+                    .addOnSuccessListener {toastAndLog("Loading $googleMapModule") }
+                    .addOnFailureListener { toastAndLog("Error Loading $googleMapModule") }
+            }
+        }
     }
 
     override fun onResume() {

@@ -11,8 +11,8 @@ android {
         applicationId "com.abhi.dynamicfeatures.ondemand"
         minSdkVersion 17
         targetSdkVersion 29
-        versionCode 22
-        versionName "22.0"
+        versionCode 23
+        versionName "23.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -23,12 +23,13 @@ android {
     }
 
 
-    dynamicFeatures = [":dynamicfeature"]
+    dynamicFeatures = [":dynamicfeature", ":googlefeature"]
 
 
 }
 
 dependencies {
+    api 'com.google.android.gms:play-services-maps:17.0.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'androidx.appcompat:appcompat:1.0.2'
