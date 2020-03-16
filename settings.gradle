@@ -1,2 +1,2 @@
-include ':app', ':dynamicfeature', ':googlefeature'
+include ':app', ':dynamicfeature', ':googlefeature', ':interfacefeature'
 rootProject.name='MyApplication'

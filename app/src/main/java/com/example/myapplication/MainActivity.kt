@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var manager: SplitInstallManager
     val moduleName = "dynamicfeature"
     val googleMapModule = "googlefeature"
+    val interfaceModule = "interfacefeature"
     val hereMapActivity = "com.example.dynamicfeature.BasicMapActivity"
     val googleMapActivity = "com.example.googlefeature.GoogleMapsActivity"
 
@@ -88,11 +89,35 @@ class MainActivity : AppCompatActivity() {
                     .build()
 
                 manager.startInstall(request)
-                    .addOnCompleteListener {toastAndLog("Module $googleMapModule installed") }
-                    .addOnSuccessListener {toastAndLog("Loading $googleMapModule") }
+                    .addOnCompleteListener { toastAndLog("Module $googleMapModule installed") }
+                    .addOnSuccessListener { toastAndLog("Loading $googleMapModule") }
                     .addOnFailureListener { toastAndLog("Error Loading $googleMapModule") }
             }
         }
+
+        bt_interface_object.setOnClickListener {
+
+            if (manager.installedModules.contains(interfaceModule)) {
+                toastAndLog("${interfaceModule} Already installed")
+
+                val testInterface =
+                    Class.forName("com.example.interfacefeature.TestInterfaceImpl").newInstance() as TestInterface
+                testInterface.callMe(this)
+
+            } else {
+                toastAndLog("Starting install for $interfaceModule")
+
+                val request = SplitInstallRequest.newBuilder()
+                    .addModule(interfaceModule)
+                    .build()
+
+                manager.startInstall(request)
+                    .addOnCompleteListener { toastAndLog("Module $interfaceModule installed") }
+                    .addOnSuccessListener { toastAndLog("Loading $interfaceModule") }
+                    .addOnFailureListener { toastAndLog("Error Loading $interfaceModule") }
+            }
+        }
+
     }
 
     override fun onResume() {
